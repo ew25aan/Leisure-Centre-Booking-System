@@ -74,7 +74,7 @@ public class BookingSystemTest {
 
     @Test(expected = Exception.class)
     public void testBookingFullLessonThrows() throws Exception {
-        // Fill a lesson to capacity with members 3–6
+        // Fill a lesson to capacity with members 3-6
         Member m3 = system.getMemberById(3);
         Member m4 = system.getMemberById(4);
         Member m5 = system.getMemberById(5);
@@ -99,7 +99,7 @@ public class BookingSystemTest {
         target.addMember(m6);
         assertTrue(target.isFull());
 
-        // Now try to book Alice — should throw
+        // now try to book Alice, should throw
         system.bookLesson(alice, target);
     }
 
@@ -114,7 +114,7 @@ public class BookingSystemTest {
     @Test(expected = Exception.class)
     public void testBookingWithTimeConflictThrows() throws Exception {
         // Alice is booked into W1 Sat Morning (lesson 0). Try to book her
-        // into another W1 Sat Morning lesson — should throw.
+        // into another W1 Sat Morning lesson, should throw.
         Lesson conflicting = new Lesson(99, ExerciseType.ZUMBA, Day.SATURDAY, TimeSlot.MORNING, 1);
         system.bookLesson(alice, conflicting);
     }
@@ -147,7 +147,7 @@ public class BookingSystemTest {
             }
         }
 
-        if (newLesson == null) return; // No suitable target found — skip rather than fail
+        if (newLesson == null) return; // no suitable target found, skip rather than fail
 
         Booking nb = system.changeBooking(oldBooking, newLesson);
         assertNotNull(nb);
@@ -159,7 +159,7 @@ public class BookingSystemTest {
 
     @Test
     public void testSubmitReviewSucceeds() throws Exception {
-        // Alice is booked into lesson 0; she already has a review — find a lesson she's booked in without one
+        // Alice is booked into lesson 0 and already has a review; find a lesson she's booked in without one
         Member member = system.getMemberById(5); // Emma Davis
         Lesson lesson = system.getLessons().get(3); // W1 Sun Morn Aquacise (Emma is booked in)
         assertTrue(lesson.hasMemberBooked(member));
@@ -171,7 +171,7 @@ public class BookingSystemTest {
             // If no exception: review was accepted, count should increase
             assertEquals(before + 1, system.getReviews().size());
         } catch (Exception e) {
-            // Duplicate review — expected; review count should be unchanged
+            // duplicate review, expected; review count should be unchanged
             assertEquals(before, system.getReviews().size());
         }
     }

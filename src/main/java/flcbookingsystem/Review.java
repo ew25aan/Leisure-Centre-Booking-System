@@ -11,7 +11,7 @@ public class Review {
     private int id;
     private Member member;
     private Lesson lesson;
-    private int rating;   // 1–5
+    private int rating;   // 1-5
     private String comment;
 
     public Review(Member member, Lesson lesson, int rating, String comment) {
@@ -44,7 +44,7 @@ public class Review {
 
     @Override
     public String toString() {
-        return String.format("Review #%d by %s: %d/5 (%s) — \"%s\"",
+        return String.format("Review #%d by %s: %d/5 (%s) - \"%s\"",
                 id, member.getName(), rating, getRatingDescription(), comment);
     }
 }

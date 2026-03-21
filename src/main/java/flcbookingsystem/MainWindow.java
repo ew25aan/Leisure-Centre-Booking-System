@@ -12,11 +12,11 @@ import java.util.List;
  *
  * <p>Contains five tabs:
  * <ol>
- *   <li>Timetable — browse lessons by day+weekend or by exercise name.</li>
- *   <li>Book a Lesson — select a member and book an available lesson.</li>
- *   <li>My Bookings — view a member's bookings and change any booking.</li>
- *   <li>Submit Review — submit a 1–5 star rating and comment after attending.</li>
- *   <li>Reports — view the member attendance report or income report.</li>
+ *   <li>Timetable: browse lessons by day/weekend or by exercise name.</li>
+ *   <li>Book a Lesson: select a member and book an available lesson.</li>
+ *   <li>My Bookings: view a member's bookings and change any booking.</li>
+ *   <li>Submit Review: submit a 1-5 star rating and comment after attending.</li>
+ *   <li>Reports: view the member attendance report or income report.</li>
  * </ol>
  */
 public class MainWindow extends JFrame {
@@ -67,7 +67,7 @@ public class MainWindow extends JFrame {
     // ══════════════════════════════════════════════════════════════════════
     public MainWindow(BookingSystem system) {
         this.system = system;
-        setTitle("Furzefield Leisure Centre — Group Exercise Booking System");
+        setTitle("Furzefield Leisure Centre | Group Exercise Booking System");
         setSize(960, 680);
         setMinimumSize(new Dimension(800, 580));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,7 +108,7 @@ public class MainWindow extends JFrame {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Tab 1 — Timetable
+    // Tab 1: Timetable
     // ══════════════════════════════════════════════════════════════════════
 
     private JPanel buildTimetableTab() {
@@ -221,7 +221,7 @@ public class MainWindow extends JFrame {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Tab 2 — Book a Lesson
+    // Tab 2: Book a Lesson
     // ══════════════════════════════════════════════════════════════════════
 
     private JPanel buildBookTab() {
@@ -263,7 +263,7 @@ public class MainWindow extends JFrame {
         bookTable = styledTable(bookModel);
         panel.add(new JScrollPane(bookTable), BorderLayout.CENTER);
 
-        // Bottom — book button
+        // Bottom: book button
         JPanel south = new JPanel(new FlowLayout(FlowLayout.CENTER));
         south.setBackground(BRAND_LIGHT);
         bookBtn = styledButton("Book Selected Lesson", new Color(0, 153, 76));
@@ -313,7 +313,7 @@ public class MainWindow extends JFrame {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Tab 3 — My Bookings
+    // Tab 3: My Bookings
     // ══════════════════════════════════════════════════════════════════════
 
     private JPanel buildMyBookingsTab() {
@@ -451,7 +451,7 @@ public class MainWindow extends JFrame {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Tab 4 — Submit Review
+    // Tab 4: Submit Review
     // ══════════════════════════════════════════════════════════════════════
 
     private JPanel buildReviewTab() {
@@ -505,7 +505,7 @@ public class MainWindow extends JFrame {
         south.add(rvSubmitBtn);
         panel.add(south, BorderLayout.SOUTH);
 
-        // Events — update lesson combo when member changes
+        // update lesson combo when member changes
         rvMemberCombo.addActionListener(e -> refreshReviewLessonCombo());
         rvSubmitBtn.addActionListener(e -> doSubmitReview());
 
@@ -541,7 +541,7 @@ public class MainWindow extends JFrame {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Tab 5 — Reports
+    // Tab 5: Reports
     // ══════════════════════════════════════════════════════════════════════
 
     private JPanel buildReportsTab() {
@@ -583,8 +583,10 @@ public class MainWindow extends JFrame {
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setFont(new Font("SansSerif", Font.BOLD, 13));
+        btn.setBorderPainted(false);       // remove native border chrome
+        btn.setContentAreaFilled(true);    // ensure background is painted
+        btn.setOpaque(true);               // force full background fill
         btn.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
-        btn.setOpaque(true);
         return btn;
     }
 
@@ -592,14 +594,30 @@ public class MainWindow extends JFrame {
         JTable table = new JTable(model);
         table.setFont(new Font("SansSerif", Font.PLAIN, 13));
         table.setRowHeight(24);
-        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
-        table.getTableHeader().setBackground(BRAND_BLUE);
-        table.getTableHeader().setForeground(Color.WHITE);
         table.setSelectionBackground(BRAND_ACCENT);
         table.setSelectionForeground(Color.WHITE);
         table.setGridColor(new Color(200, 220, 240));
         table.setFillsViewportHeight(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Custom header renderer guarantees colours are honoured on every L&F.
+        // (JTableHeader.setBackground/setForeground is overridden by some L&Fs.)
+        table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(
+                    JTable t, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(t, value, isSelected, hasFocus, row, column);
+                setBackground(BRAND_BLUE);
+                setForeground(Color.WHITE);
+                setFont(new Font("SansSerif", Font.BOLD, 13));
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setBorder(BorderFactory.createMatteBorder(0, 0, 2, 1, new Color(0, 70, 120)));
+                setOpaque(true);
+                return this;
+            }
+        });
+        table.getTableHeader().setReorderingAllowed(false);
         return table;
     }
 
@@ -641,7 +659,7 @@ public class MainWindow extends JFrame {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value instanceof Lesson) {
                 Lesson l = (Lesson) value;
-                setText(String.format("W%d %s %s — %s (£%.2f)",
+                setText(String.format("W%d %s %s - %s (£%.2f)",
                         l.getWeekendNumber(), l.getDay().getDisplayName(),
                         l.getTimeSlot().getDisplayName(),
                         l.getExerciseType().getDisplayName(), l.getPrice()));

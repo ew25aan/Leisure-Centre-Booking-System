@@ -176,7 +176,7 @@ public class BookingSystem {
     public String generateMemberReport() {
         StringBuilder sb = new StringBuilder();
         sb.append("╔══════════════════════════════════════════════════════════════════════════════╗\n");
-        sb.append("║          MEMBER ATTENDANCE REPORT — ALL WEEKENDS                           ║\n");
+        sb.append("║           MEMBER ATTENDANCE REPORT - ALL WEEKENDS                           ║\n");
         sb.append("╚══════════════════════════════════════════════════════════════════════════════╝\n\n");
         sb.append(String.format("%-4s  %-10s  %-11s  %-12s  %7s  %9s  %-10s%n",
                 "W/E", "Day", "Time", "Exercise", "Members", "Capacity", "Avg Rating"));
@@ -282,7 +282,7 @@ public class BookingSystem {
     }
 
     // -----------------------------------------------------------------------
-    // Data initialisation — private helpers
+    // Data initialisation
     // -----------------------------------------------------------------------
 
     private Lesson createLesson(ExerciseType type, Day day, TimeSlot slot, int weekend) {
@@ -400,10 +400,10 @@ public class BookingSystem {
         addReviewSilently(members.get(8), lessons.get(0), 5, "Loved it! Will definitely book again.");
         addReviewSilently(members.get(2), lessons.get(1), 3, "Zumba was okay, a bit crowded at times.");
         addReviewSilently(members.get(3), lessons.get(1), 4, "Fun Zumba class with great moves.");
-        addReviewSilently(members.get(4), lessons.get(3), 5, "Aquacise was brilliant — perfect for my joints.");
+        addReviewSilently(members.get(4), lessons.get(3), 5, "Aquacise was brilliant, perfect for my joints.");
         addReviewSilently(members.get(9), lessons.get(3), 4, "Really enjoyable session, will come back.");
         addReviewSilently(members.get(5), lessons.get(4), 2, "Body Blitz was not what I expected.");
-        addReviewSilently(members.get(6), lessons.get(2), 5, "Intense Box Fit session — loved every minute!");
+        addReviewSilently(members.get(6), lessons.get(2), 5, "Intense Box Fit session, loved every minute!");
         addReviewSilently(members.get(7), lessons.get(5), 4, "Relaxing evening yoga, great instructor.");
 
         // --- Weekend 2 reviews (8) ---
@@ -411,7 +411,7 @@ public class BookingSystem {
         addReviewSilently(members.get(6), lessons.get(6),  5, "Best Zumba session I've ever attended!");
         addReviewSilently(members.get(1), lessons.get(7),  3, "Aquacise was alright, nothing too special.");
         addReviewSilently(members.get(4), lessons.get(8),  4, "Body Blitz was tough but very rewarding.");
-        addReviewSilently(members.get(2), lessons.get(9),  5, "Box Fit was amazing — great full-body workout.");
+        addReviewSilently(members.get(2), lessons.get(9),  5, "Box Fit was amazing, great full-body workout.");
         addReviewSilently(members.get(7), lessons.get(9),  4, "Really enjoyed Box Fit, much better this time.");
         addReviewSilently(members.get(3), lessons.get(10), 5, "Afternoon yoga is so peaceful and refreshing.");
         addReviewSilently(members.get(5), lessons.get(11), 3, "Zumba was fine, nothing too special.");
@@ -420,18 +420,18 @@ public class BookingSystem {
         addReviewSilently(members.get(8), lessons.get(12), 4, "Box Fit was intense but great exercise!");
         addReviewSilently(members.get(9), lessons.get(13), 5, "Body Blitz exceeded my expectations!");
         addReviewSilently(members.get(0), lessons.get(15), 5, "Morning Yoga is always a joy. Pure bliss.");
-        addReviewSilently(members.get(1), lessons.get(16), 4, "Enjoyed the Zumba variety — very lively.");
+        addReviewSilently(members.get(1), lessons.get(16), 4, "Enjoyed the Zumba variety, very lively.");
         // Total: 22 reviews
     }
 
-    /** Books a lesson without throwing — used only for pre-loading sample data. */
+    /** Books a lesson without throwing, used only for pre-loading sample data. */
     private void addBookingSilently(Member member, Lesson lesson) {
         try {
             bookLesson(member, lesson);
         } catch (Exception ignored) { }
     }
 
-    /** Adds a review directly (bypasses booking check) — for pre-loading sample data. */
+    /** Adds a review directly (bypasses booking check), for pre-loading sample data. */
     private void addReviewSilently(Member member, Lesson lesson, int rating, String comment) {
         try {
             Review review = new Review(member, lesson, rating, comment);

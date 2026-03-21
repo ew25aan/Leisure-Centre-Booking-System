@@ -12,9 +12,11 @@ import javax.swing.UIManager;
 public class FLCApp {
 
     public static void main(String[] args) {
-        // Use the system look-and-feel for a native appearance
+        // Use the cross-platform (Metal) L&F so that custom colours on
+        // JButton and JTableHeader are honoured on all platforms (the
+        // Windows native L&F silently ignores setBackground / setForeground).
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception ignored) { }
 
         SwingUtilities.invokeLater(() -> {

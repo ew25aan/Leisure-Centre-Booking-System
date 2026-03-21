@@ -54,7 +54,7 @@ public class MemberTest {
         Booking b = new Booking(alice, yogaSatMorn);
         alice.addBooking(b);
 
-        // Saturday Afternoon is a different slot — no conflict
+        // Saturday Afternoon is a different slot, no conflict
         assertFalse("Different time slot should not conflict",
                 alice.hasTimeConflict(yogaSatAftn));
     }
@@ -65,7 +65,7 @@ public class MemberTest {
         Booking b = new Booking(alice, yogaSatMorn);
         alice.addBooking(b);
 
-        // Same day and time but Weekend 2 — no conflict
+        // same day and time but Weekend 2, no conflict
         assertFalse("Different weekend should not conflict",
                 alice.hasTimeConflict(yogaSatMornW2));
     }
